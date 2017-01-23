@@ -19,4 +19,19 @@ class EmployersController  extends AppController{
         $employers=$this->Employers->find('all');
         $this->set(compact('employers'));
     }
+    public function add(){
+        
+       $employ=$this->Employers->newEntity();
+       if($this->request->is('post')){
+           $job=$this->Employers->patchEntity($employ,$this->request->data);
+           if($this->Employers->save($employ)){
+               $this->Flash->success(__('The User has been saved.'));
+              return $this->redirect(['action' => 'index']);
+           }
+           else{
+                $this->Flash->error(__('The User could not be saved. Please, try again.'));
+           }
+       }
+       $this->set('employer',$employ);
+    }
 }
